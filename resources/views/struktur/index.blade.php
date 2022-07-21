@@ -37,24 +37,27 @@
                     <div class="row">
                         <div class="col-12">
                             <img src="{{Storage::url($data->foto)}}" width="200" height="200" style="object-fit: cover; margin-bottom: 20px;border-radius: 20px;" alt="">
-
-                            <div class="input-style-1">
-                                <label for="foto">{{ __('Foto') }}</label>
-                                <input type="file" @error('foto') class="form-control is-invalid" @enderror name="foto" required>
-                                @error('foto')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            @if (Auth::user()->level->nama_level == 'Pengurus')
+                                <div class="input-style-1">
+                                    <label for="foto">{{ __('Foto') }}</label>
+                                    <input type="file" @error('foto') class="form-control is-invalid" @enderror name="foto" required>
+                                    @error('foto')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            @endif
                         </div>
-                        <div class="col-12">
-                            <div class="button-group d-flex justify-content-center flex-wrap">
-                                <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
-                                    {{ __('Submit') }}
-                                </button>
+                        @if (Auth::user()->level->nama_level == 'Pengurus')
+                            <div class="col-12">
+                                <div class="button-group d-flex justify-content-center flex-wrap">
+                                    <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
+                                        {{ __('Submit') }}
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </form>
 

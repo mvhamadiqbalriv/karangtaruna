@@ -40,7 +40,7 @@
                                 <label for="nama_karta">{{ __('Nama Karang Taruna') }}</label>
                                 <input type="text" @error('nama_karta') class="form-control is-invalid" @enderror name="nama_karta"
                                        id="nama_karta" placeholder="{{ __('Nama Lengkap') }}"
-                                       value="{{ old('nama_karta', $data->nama_karta) }}" required>
+                                       value="{{ old('nama_karta', $data->nama_karta) }}" @if (Auth::user()->level->nama_level == 'Anggota') readonly @endif required>
                                 @error('nama_karta')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -51,7 +51,7 @@
                         <div class="col-12">
                             <div class="input-style-1">
                                 <label for="deskripsi">{{ __('Deskirpsi') }}</label>
-                                <textarea name="deskripsi" class="form-control @error('deskripsi') id-invalid @enderror" id="" cols="30" rows="5" required>
+                                <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" id="" cols="30" rows="5" @if (Auth::user()->level->nama_level == 'Anggota') readonly @endif required>
                                     {{old('deskripsi', $data->deskripsi)}}
                                 </textarea>
                                 @error('deskripsi')
@@ -63,24 +63,27 @@
                         </div>
                         <div class="col-12">
                             <img src="{{Storage::url($data->logo)}}" width="200" height="200" style="object-fit: cover; margin-bottom: 20px;border-radius: 20px;" alt="">
-
-                            <div class="input-style-1">
-                                <label for="logo">{{ __('Logo') }}</label>
-                                <input type="file" @error('logo') class="form-control is-invalid" @enderror name="logo">
-                                @error('logo')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                            @if (Auth::user()->level->nama_level == 'Pengurus')
+                                <div class="input-style-1">
+                                    <label for="logo">{{ __('Logo') }}</label>
+                                    <input type="file" @error('logo') class="form-control is-invalid" @enderror name="logo">
+                                    @error('logo')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            @endif
                         </div>
-                        <div class="col-12">
-                            <div class="button-group d-flex justify-content-center flex-wrap">
-                                <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
-                                    {{ __('Submit') }}
-                                </button>
+                        @if (Auth::user()->level->nama_level == 'Pengurus')
+                            <div class="col-12">
+                                <div class="button-group d-flex justify-content-center flex-wrap">
+                                    <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
+                                        {{ __('Submit') }}
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </form>
 

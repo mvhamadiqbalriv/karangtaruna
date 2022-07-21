@@ -31,9 +31,11 @@
                 @endif
 
                 <div class="table-wrapper table-responsive">
-                    <a href="{{route('kegiatan.create')}}" class="btn btn-outline-success">
-                        <i class="fa fa-plus"></i> Tambah Kegiatan
-                    </a>
+                    @if (Auth::user()->level->nama_level == 'Pengurus')
+                        <a href="{{route('kegiatan.create')}}" class="btn btn-outline-success">
+                            <i class="fa fa-plus"></i> Tambah Kegiatan
+                        </a>
+                    @endif
                     <table class="table striped-table">
                         <thead>
                             <tr>
@@ -52,9 +54,11 @@
                                 <th>
                                     <h6>Keterangan</h6>
                                 </th>
-                                <th>
-                                    <h6>Aksi</h6>
-                                </th>
+                                @if (Auth::user()->level->nama_level == 'Pengurus')
+                                    <th>
+                                        <h6>Aksi</h6>
+                                    </th>
+                                @endif
                             </tr>
                             <!-- end table row-->
                         </thead>
@@ -77,17 +81,19 @@
                                     <td>
                                         <p>{{ $activity->kegiatan }}</p>
                                     </td>
-                                    <td>
-                                        <a href="{{route('kegiatan.show', $activity->id_kegiatan)}}" class="btn btn-outline-warning">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                        <a href="{{route('kegiatan.edit', $activity->id_kegiatan)}}" class="btn btn-outline-info">
-                                            <i class="fa fa-pencil-alt"></i>
-                                        </a>
-                                        <a href="javascript:void(0)" onclick="hapus('{{$activity->id_kegiatan}}')" class="btn btn-outline-danger">
-                                            <i class="fa fa-trash-alt"></i>
-                                        </a>
-                                    </td>
+                                    @if (Auth::user()->level->nama_level == 'Pengurus')
+                                        <td>
+                                            <a href="{{route('kegiatan.show', $activity->id_kegiatan)}}" class="btn btn-outline-warning">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a href="{{route('kegiatan.edit', $activity->id_kegiatan)}}" class="btn btn-outline-info">
+                                                <i class="fa fa-pencil-alt"></i>
+                                            </a>
+                                            <a href="javascript:void(0)" onclick="hapus('{{$activity->id_kegiatan}}')" class="btn btn-outline-danger">
+                                                <i class="fa fa-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             <!-- end table row -->

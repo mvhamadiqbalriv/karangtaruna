@@ -75,21 +75,23 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="input-style-1">
-                                <label for="id_level">{{ __('Jenis Anggota') }}</label>
-                                <select name="id_level" class="form-control  @error('id_level') is-invalid @enderror"  id="id_level">
-                                    @foreach ($level as $item)
-                                        <option value="{{$item->id_level}}" {{ old('id_level') == $item->id_level ? 'selected' : null }}>{{$item->nama_level}}</option>
-                                    @endforeach
-                                </select>
-                                @error('id_level')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        @if (Auth::user()->level->nama_level == 'Pengurus')
+                            <div class="col-12">
+                                <div class="input-style-1">
+                                    <label for="id_level">{{ __('Jenis Anggota') }}</label>
+                                    <select name="id_level" class="form-control  @error('id_level') is-invalid @enderror"  id="id_level">
+                                        @foreach ($level as $item)
+                                            <option value="{{$item->id_level}}" {{ old('id_level') == $item->id_level ? 'selected' : null }}>{{$item->nama_level}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('id_level')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
+                        @endif
                         <!-- end col -->
                         <div class="col-12">
                             <div class="input-style-1">

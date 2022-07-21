@@ -19,9 +19,11 @@
         <div class="card-style-3 mb-30">
             <div class="card-content">
                 <div class="table-wrapper table-responsive">
-                    <button type="button"class="btn btn-outline-success" onclick="tambah()">
-                        <i class="fa fa-plus"></i> Tambah User
-                    </button>
+                    @if (Auth::user()->level->nama_level == 'Pengurus')
+                        <button type="button"class="btn btn-outline-success" onclick="tambah()">
+                            <i class="fa fa-plus"></i> Tambah User
+                        </button>
+                    @endif
                     <table class="table striped-table">
                         <thead>
                             <tr>
@@ -37,9 +39,11 @@
                                 <th>
                                     <h6>Jabatan</h6>
                                 </th>
-                                <th>
-                                    <h6>Aksi</h6>
-                                </th>
+                                @if (Auth::user()->level->nama_level == 'Pengurus')
+                                    <th>
+                                        <h6>Aksi</h6>
+                                    </th>
+                                @endif
                             </tr>
                             <!-- end table row-->
                         </thead>
@@ -58,20 +62,22 @@
                                     <td>
                                         <p>{{ $user->level->nama_level }}</p>
                                     </td>
-                                    <td>
-                                        <button type="button"class="btn btn-outline-info"
-                                            onclick="ubah('{{ $user->id_user }}')">
-                                            <i class="fa fa-pencil-alt"></i>
-                                        </button>
-                                        <button type="button"class="btn btn-outline-warning"
-                                            onclick="ubahPassword('{{ $user->id_user }}')">
-                                            <i class="fa fa-key"></i>
-                                        </button>
-                                        <button type="button"class="btn btn-outline-danger"
-                                            onclick="hapus('{{ $user->id_user }}')">
-                                            <i class="fa fa-trash-alt"></i>
-                                        </button>
-                                    </td>
+                                    @if (Auth::user()->level->nama_level == 'Pengurus')
+                                        <td>
+                                            <button type="button"class="btn btn-outline-info"
+                                                onclick="ubah('{{ $user->id_user }}')">
+                                                <i class="fa fa-pencil-alt"></i>
+                                            </button>
+                                            <button type="button"class="btn btn-outline-warning"
+                                                onclick="ubahPassword('{{ $user->id_user }}')">
+                                                <i class="fa fa-key"></i>
+                                            </button>
+                                            <button type="button"class="btn btn-outline-danger"
+                                                onclick="hapus('{{ $user->id_user }}')">
+                                                <i class="fa fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             <!-- end table row -->
